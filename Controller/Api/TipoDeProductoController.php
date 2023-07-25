@@ -1,8 +1,8 @@
 <?php
-class UserController extends BaseController
+class TipoDeProductoController extends BaseController
 {
   /**
-   * "/user/list" - Get list of users
+   * "/tipodeproducto/list" - Obtiene una lista de los tipos de producto
    */
   public function listAction()
   {
@@ -12,11 +12,11 @@ class UserController extends BaseController
 
     if (strtoupper($requestMethod) == 'GET') {
       try {
-        $userModel = new UserModel();
+        $tipoDeProductoModel = new TipoDeProductoModel();
         $limit = $queryStringParams['limit'] ?? 10;
-        $users = $userModel->getUsers($limit);
+        $TipoDeProducto = $tipoDeProductoModel->getTipoDeProducto($limit);
 
-        $responseData = json_encode($users);
+        $responseData = json_encode($TipoDeProducto);
       } catch (Error $e) {
         $errorDesc = $e->getMessage() . 'Algo salió mal';
         $errorHeader = 'HTTP/1.1 500 Internal Server Error';
@@ -47,11 +47,11 @@ class UserController extends BaseController
 
     if (strtoupper($requestMethod) == 'GET') {
       try {
-        $userModel = new UserModel();
+        $tipoDeProductoModel = new TipoDeProductoModel();
         $id = $queryStringParams['id'] ?? 1;
-        $user = $userModel->getUserById($id);
+        $TipoDeProducto = $tipoDeProductoModel->getTipoDeProductoById($id);
 
-        $responseData = json_encode($user);
+        $responseData = json_encode($TipoDeProducto);
       } catch (Error $e) {
         $errorDesc = $e->getMessage() . 'Algo salió mal';
         $errorHeader = 'HTTP/1.1 500 Internal Server Error';
@@ -78,16 +78,15 @@ class UserController extends BaseController
   {
     $errorDesc = '';
     $requestMethod = $_SERVER["REQUEST_METHOD"];
-    $queryStringParams = $this->getQueryStringParams();
 
     if (strtoupper($requestMethod) == 'POST') {
       try {
-        $userModel = new UserModel();
-        $user = json_decode(file_get_contents('php://input'));
+        $tipoDeProductoModel = new TipoDeProductoModel();
+        $tipoDeProducto = json_decode(file_get_contents('php://input'));
 
-        $userId = $userModel->createUser($user);
+        $tipoDeProductoId = $tipoDeProductoModel->createTipoDeProducto($tipoDeProducto);
 
-        $responseData = json_encode(array('user_id' => $userId));
+        $responseData = json_encode(array('id_tipo_de_producto' => $tipoDeProductoId));
       } catch (Error $e) {
         $errorDesc = $e->getMessage() . 'Algo salió mal';
         $errorHeader = 'HTTP/1.1 500 Internal Server Error';
