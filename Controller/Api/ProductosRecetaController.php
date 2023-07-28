@@ -1,5 +1,5 @@
 <?php
-class ProductosController extends BaseController
+class ProductosRecetaController extends BaseController
 {
   /**
    * "/Productos/list" - Obtiene una lista de los productos
@@ -12,11 +12,11 @@ class ProductosController extends BaseController
 
     if (strtoupper($requestMethod) == 'GET') {
       try {
-        $productosModel = new ProductosModel();
+        $ProductosReceta = new ProductosRecetaModel();
         $limit = $queryStringParams['limit'] ?? 10;
-        $producto = $productosModel->getProducto($limit);
+        $productoReceta = $ProductosReceta->getProductoReceta($limit);
 
-        $responseData = json_encode($producto);
+        $responseData = json_encode($productoReceta);
       } catch (Error $e) {
         $errorDesc = $e->getMessage() . 'Algo salió mal';
         $errorHeader = 'HTTP/1.1 500 Internal Server Error';
@@ -47,11 +47,11 @@ class ProductosController extends BaseController
 
     if (strtoupper($requestMethod) == 'GET') {
       try {
-        $productosModel = new ProductosModel();
+        $ProductosReceta = new ProductosRecetaModel();
         $id = $queryStringParams['id'] ?? 1;
-        $Producto = $productosModel->getProductoById($id);
+        $productoReceta = $ProductosReceta->getProductoRecetaById($id);
 
-        $responseData = json_encode($Producto);
+        $responseData = json_encode($productoReceta);
       } catch (Error $e) {
         $errorDesc = $e->getMessage() . 'Algo salió mal';
         $errorHeader = 'HTTP/1.1 500 Internal Server Error';
@@ -81,12 +81,12 @@ class ProductosController extends BaseController
 
     if (strtoupper($requestMethod) == 'POST') {
       try {
-        $productosModel = new ProductosModel();
-        $producto = json_decode(file_get_contents('php://input'));
+        $ProductosReceta = new ProductosRecetaModel();
+        $productoReceta = json_decode(file_get_contents('php://input'));
 
-        $productoId = $productosModel->createProducto($producto);
+        $productoRecetaId = $ProductosReceta->createProductoReceta($productoReceta);
 
-        $responseData = json_encode(array('id_producto' => $productoId));
+        $responseData = json_encode(array('id_paquete' => $productoRecetaId));
       } catch (Error $e) {
         $errorDesc = $e->getMessage() . 'Algo salió mal';
         $errorHeader = 'HTTP/1.1 500 Internal Server Error';

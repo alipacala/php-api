@@ -4,11 +4,11 @@ class CentralDeCostosController extends BaseController
   /**
    * "/centraldecostos/list" - Obtiene una lista de las centrales de costos
    */
-  public function listAction()
+  public function listarAction()
   {
     $errorDesc = '';
     $requestMethod = $_SERVER["REQUEST_METHOD"];
-    $queryStringParams = $this->getQueryStringParams();
+    $queryStringParams = RequestHandler::getQueryStringParams();
 
     if (strtoupper($requestMethod) == 'GET') {
       try {
@@ -39,11 +39,11 @@ class CentralDeCostosController extends BaseController
     }
   }
 
-  public function findOneAction()
+  public function buscarPorIdAction()
   {
     $errorDesc = '';
     $requestMethod = $_SERVER["REQUEST_METHOD"];
-    $queryStringParams = $this->getQueryStringParams();
+    $queryStringParams = RequestHandler::getQueryStringParams();
 
     if (strtoupper($requestMethod) == 'GET') {
       try {
@@ -74,7 +74,7 @@ class CentralDeCostosController extends BaseController
     }
   }
 
-  public function createAction()
+  public function crearAction()
   {
     $errorDesc = '';
     $requestMethod = $_SERVER["REQUEST_METHOD"];

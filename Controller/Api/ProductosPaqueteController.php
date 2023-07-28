@@ -1,5 +1,5 @@
 <?php
-class ProductosController extends BaseController
+class ProductosPaqueteController extends BaseController
 {
   /**
    * "/Productos/list" - Obtiene una lista de los productos
@@ -12,11 +12,11 @@ class ProductosController extends BaseController
 
     if (strtoupper($requestMethod) == 'GET') {
       try {
-        $productosModel = new ProductosModel();
+        $ProductosPaquete = new ProductosPaqueteModel();
         $limit = $queryStringParams['limit'] ?? 10;
-        $producto = $productosModel->getProducto($limit);
+        $productoPaquete = $ProductosPaquete->getProductoPaquete($limit);
 
-        $responseData = json_encode($producto);
+        $responseData = json_encode($productoPaquete);
       } catch (Error $e) {
         $errorDesc = $e->getMessage() . 'Algo salió mal';
         $errorHeader = 'HTTP/1.1 500 Internal Server Error';
@@ -47,11 +47,11 @@ class ProductosController extends BaseController
 
     if (strtoupper($requestMethod) == 'GET') {
       try {
-        $productosModel = new ProductosModel();
+        $ProductosPaquete = new ProductosPaqueteModel();
         $id = $queryStringParams['id'] ?? 1;
-        $Producto = $productosModel->getProductoById($id);
+        $productoPaquete = $ProductosPaquete->getProductoPaqueteById($id);
 
-        $responseData = json_encode($Producto);
+        $responseData = json_encode($productoPaquete);
       } catch (Error $e) {
         $errorDesc = $e->getMessage() . 'Algo salió mal';
         $errorHeader = 'HTTP/1.1 500 Internal Server Error';
@@ -81,12 +81,12 @@ class ProductosController extends BaseController
 
     if (strtoupper($requestMethod) == 'POST') {
       try {
-        $productosModel = new ProductosModel();
-        $producto = json_decode(file_get_contents('php://input'));
+        $ProductosPaquete = new ProductosPaqueteModel();
+        $productoPaquete = json_decode(file_get_contents('php://input'));
 
-        $productoId = $productosModel->createProducto($producto);
+        $productoPaqueteId = $ProductosPaquete->createProductoPaquete($productoPaquete);
 
-        $responseData = json_encode(array('id_producto' => $productoId));
+        $responseData = json_encode(array('id_paquete' => $productoPaqueteId));
       } catch (Error $e) {
         $errorDesc = $e->getMessage() . 'Algo salió mal';
         $errorHeader = 'HTTP/1.1 500 Internal Server Error';

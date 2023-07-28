@@ -18,4 +18,16 @@ class TipoDeProductoModel extends Database
     $result = $this->insert("INSERT INTO tipodeproductos (nombre_tipo_de_producto) VALUES (?)", ["s", $tipoDeProducto->nombre_tipo_de_producto]);
     return $result;
   }
+
+  public function updateTipoDeProducto($id, $tipoDeProducto)
+  {
+    $result = $this->update("UPDATE tipodeproductos SET nombre_tipo_de_producto = ? WHERE id_tipo_producto = ?", ["si", $tipoDeProducto->nombre_tipo_de_producto, $id]);
+    return $result;
+  }
+
+  public function deleteTipoDeProducto($id)
+  {
+    $result = $this->delete("DELETE FROM tipodeproductos WHERE id_tipo_producto = ?", ["i", $id]);
+    return $result;
+  }
 }

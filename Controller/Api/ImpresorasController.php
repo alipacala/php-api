@@ -1,19 +1,22 @@
 <?php
-class TipoDeProductoController extends BaseController
+class ImpresorasController extends BaseController
 {
+  /**
+   * "/Impresoras/list" - Obtiene una lista de los tipos de producto
+   */
   public function listarAction()
   {
     $errorDesc = '';
     $requestMethod = $_SERVER["REQUEST_METHOD"];
-    $queryStringParams = RequestHandler::getQueryStringParams();
+    $queryStringParams =RequestHandler::getQueryStringParams();
 
     if (strtoupper($requestMethod) == 'GET') {
       try {
-        $tipoDeProductoModel = new TipoDeProductoModel();
+        $ImpresorasModel = new ImpresorasModel();
         $limit = $queryStringParams['limit'] ?? 10;
-        $TipoDeProducto = $tipoDeProductoModel->getTipoDeProducto($limit);
+        $Impresoras = $ImpresorasModel->getImpresoras($limit);
 
-        $responseData = json_encode($TipoDeProducto);
+        $responseData = json_encode($Impresoras);
       } catch (Error $e) {
         $errorDesc = $e->getMessage() . 'Algo salió mal';
         $errorHeader = 'HTTP/1.1 500 Internal Server Error';
@@ -44,11 +47,11 @@ class TipoDeProductoController extends BaseController
 
     if (strtoupper($requestMethod) == 'GET') {
       try {
-        $tipoDeProductoModel = new TipoDeProductoModel();
+        $ImpresorasModel = new ImpresorasModel();
         $id = $queryStringParams['id'] ?? 1;
-        $TipoDeProducto = $tipoDeProductoModel->getTipoDeProductoById($id);
+        $Impresoras = $ImpresorasModel->getImpresorasById($id);
 
-        $responseData = json_encode($TipoDeProducto);
+        $responseData = json_encode($Impresoras);
       } catch (Error $e) {
         $errorDesc = $e->getMessage() . 'Algo salió mal';
         $errorHeader = 'HTTP/1.1 500 Internal Server Error';
@@ -78,12 +81,12 @@ class TipoDeProductoController extends BaseController
 
     if (strtoupper($requestMethod) == 'POST') {
       try {
-        $tipoDeProductoModel = new TipoDeProductoModel();
-        $tipoDeProducto = json_decode(file_get_contents('php://input'));
+        $ImpresorasModel = new ImpresorasModel();
+        $Impresoras = json_decode(file_get_contents('php://input'));
 
-        $tipoDeProductoId = $tipoDeProductoModel->createTipoDeProducto($tipoDeProducto);
+        $ImpresorasId = $ImpresorasModel->createImpresora($Impresoras);
 
-        $responseData = json_encode(array('id_tipo_de_producto' => $tipoDeProductoId));
+        $responseData = json_encode(array('id_tipo_de_producto' => $ImpresorasId));
       } catch (Error $e) {
         $errorDesc = $e->getMessage() . 'Algo salió mal';
         $errorHeader = 'HTTP/1.1 500 Internal Server Error';
@@ -114,14 +117,14 @@ class TipoDeProductoController extends BaseController
 
     if (strtoupper($requestMethod) == 'PUT') {
       try {
-        $tipoDeProductoModel = new TipoDeProductoModel();
-        $tipoDeProducto = json_decode(file_get_contents('php://input'));
+        $ImpresorasModel = new ImpresorasModel();
+        $Impresoras = json_decode(file_get_contents('php://input'));
 
         $id = $queryStringParams['id'] ?? 1;
 
-        $tipoDeProductoId = $tipoDeProductoModel->updateTipoDeProducto($id, $tipoDeProducto);
+        $ImpresorasId = $ImpresorasModel->updateImpresoras($id, $Impresoras);
 
-        $responseData = json_encode(array('id_tipo_de_producto' => $tipoDeProductoId));
+        $responseData = json_encode(array('id_tipo_de_producto' => $ImpresorasId));
       } catch (Error $e) {
         $errorDesc = $e->getMessage() . 'Algo salió mal';
         $errorHeader = 'HTTP/1.1 500 Internal Server Error';
@@ -152,13 +155,13 @@ class TipoDeProductoController extends BaseController
 
     if (strtoupper($requestMethod) == 'DELETE') {
       try {
-        $tipoDeProductoModel = new TipoDeProductoModel();
+        $ImpresorasModel = new ImpresorasModel();
 
         $id = $queryStringParams['id'] ?? 1;
 
-        $tipoDeProductoId = $tipoDeProductoModel->deleteTipoDeProducto($id);
+        $ImpresorasId = $ImpresorasModel->deleteImpresoras($id);
 
-        if ($tipoDeProductoId == 0) {
+        if ($ImpresorasId == 0) {
           $errorDesc = 'No se pudo eliminar el tipo de producto';
           $errorHeader = 'HTTP/1.1 500 Internal Server Error';
         } else {

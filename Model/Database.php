@@ -41,6 +41,32 @@ class Database
         }
     }
 
+    public function update($query = "", $params = [])
+    {
+        try {
+            $stmt = $this->executeStatement($query, $params);
+            $result = $stmt->affected_rows;
+
+            $stmt->close();
+            return $result;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public function delete($query = "", $params = [])
+    {
+        try {
+            $stmt = $this->executeStatement($query, $params);
+            $result = $stmt->affected_rows;
+
+            $stmt->close();
+            return $result;
+        } catch (Exception $e) {
+            throw new Exception($e->getMessage());
+        }
+    }
+
     private function executeStatement($query = "", $params = [])
     {
         try {
